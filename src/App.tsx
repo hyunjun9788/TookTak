@@ -1,9 +1,8 @@
 import './App.css';
+import Home from './pages/Home';
 
 function App() {
-  const nam = 'a';
-  console.log(nam);
-  return <></>;
+  return <Home />;
 }
 
 export default App;
