@@ -1,9 +1,15 @@
+import { Route, Routes } from 'react-router';
 import './App.css';
+import Home from './pages/Home';
+import TodoList from './pages/TodoList';
 
 function App() {
-  const nam = 'a';
-  console.log(nam);
-  return <></>;
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/todolist" element={<TodoList />} />
+    </Routes>
+  );
 }
 
 export default App;
