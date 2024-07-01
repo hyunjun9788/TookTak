@@ -21,6 +21,7 @@ module.exports = {
     "@typescript-eslint/no-unused-vars": "warn",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-inferrable-types": "off",
+    "arrow-body-style": ["off"],
     'import/extensions': [
       'error',
       'ignorePackages',
