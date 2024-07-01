@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: Pretendard;
+  font-weight: 400;
+  src:
+    local('Pretendard Regular'),
+    url('./assets/fonts/PretendardVariable.woff2') format('woff2');
+}
+
+html,
+body,
+:root {
+  height: 100%;
+  font-family: 'Pretendard';
+}
