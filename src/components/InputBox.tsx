@@ -1,10 +1,15 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 const InputBox = ({ onCreate }: { onCreate: (content: string) => void }) => {
   const [content, setContent] = useState('');
-
+  const contentRef = useRef<HTMLInputElement>(null);
   const handleClickButton = () => {
+    if (content === '' && contentRef.current !== null) {
+      contentRef.current.focus();
+      return;
+    }
     onCreate(content);
+    setContent('');
   };
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,6 +19,7 @@ const InputBox = ({ onCreate }: { onCreate: (content: string) => void }) => {
   return (
     <form className="flex ">
       <input
+        ref={contentRef}
         value={content}
         onChange={handleChangeInput}
         placeholder="할 일을 추가해 보세요"
