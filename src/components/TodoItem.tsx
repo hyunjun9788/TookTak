@@ -1,7 +1,15 @@
 import { MockData } from '../types/mockData';
 
-const TodoItem = ({ todo }: { todo: MockData }) => {
-  const handleClickDeleteBtn = () => {};
+const TodoItem = ({
+  todo,
+  onDelete,
+}: {
+  todo: MockData;
+  onDelete: (id: number) => void;
+}) => {
+  const handleClickDeleteBtn = () => {
+    onDelete(todo.id);
+  };
 
   return (
     <div className="flex gap-4 py-5 border-b-[1px]">

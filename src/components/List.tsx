@@ -2,7 +2,13 @@ import { useState } from 'react';
 import { MockData } from '../types/mockData';
 import TodoItem from './TodoItem';
 
-const List = ({ todos }: { todos: MockData[] }) => {
+const List = ({
+  todos,
+  onDelete,
+}: {
+  todos: MockData[];
+  onDelete: (id: number) => void;
+}) => {
   const [search, setSearch] = useState('');
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -26,7 +32,7 @@ const List = ({ todos }: { todos: MockData[] }) => {
         />
       </div>
       {filteredTodos.map((todo) => (
-        <TodoItem key={todo.id} todo={todo} />
+        <TodoItem key={todo.id} todo={todo} onDelete={onDelete} />
       ))}
     </>
   );

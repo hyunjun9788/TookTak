@@ -17,17 +17,20 @@ function TodoList() {
       id: idRef.current++,
       isDone: false,
       content,
-      date: new Date().getDate(),
+      date: new Date().getTime(),
     };
     setTodos([newTodo, ...todos]);
   };
 
+  const onDelete = (id: number) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
   return (
     <div>
       <Header />
       <div className="w-[600px] mt-24 mx-auto">
         <InputBox onCreate={onCreate} />
-        <List todos={todos} />
+        <List todos={todos} onDelete={onDelete} />
       </div>
     </div>
   );
