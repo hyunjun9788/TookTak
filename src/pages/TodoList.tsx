@@ -25,12 +25,20 @@ function TodoList() {
   const onDelete = (id: number) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
+
+  const onEdit = (id: number) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, isDone: !todo.isDone } : todo,
+      ),
+    );
+  };
   return (
     <div>
       <Header />
       <div className="w-[600px] mt-24 mx-auto">
         <InputBox onCreate={onCreate} />
-        <List todos={todos} onDelete={onDelete} />
+        <List todos={todos} onDelete={onDelete} onEdit={onEdit} />
       </div>
     </div>
   );

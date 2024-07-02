@@ -5,9 +5,11 @@ import TodoItem from './TodoItem';
 const List = ({
   todos,
   onDelete,
+  onEdit,
 }: {
   todos: MockData[];
   onDelete: (id: number) => void;
+  onEdit: (id: number) => void;
 }) => {
   const [search, setSearch] = useState('');
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +34,12 @@ const List = ({
         />
       </div>
       {filteredTodos.map((todo) => (
-        <TodoItem key={todo.id} todo={todo} onDelete={onDelete} />
+        <TodoItem
+          key={todo.id}
+          todo={todo}
+          onDelete={onDelete}
+          onEdit={onEdit}
+        />
       ))}
     </>
   );
