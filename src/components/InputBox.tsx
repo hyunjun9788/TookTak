@@ -3,7 +3,8 @@ import { useRef, useState } from 'react';
 const InputBox = ({ onCreate }: { onCreate: (content: string) => void }) => {
   const [content, setContent] = useState('');
   const contentRef = useRef<HTMLInputElement>(null);
-  const handleClickButton = () => {
+
+  const handleClickCreateBtn = () => {
     if (content === '' && contentRef.current !== null) {
       contentRef.current.focus();
       return;
@@ -16,6 +17,11 @@ const InputBox = ({ onCreate }: { onCreate: (content: string) => void }) => {
     setContent(e.target.value);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (e.keyCode === 13) {
+      onCreate(content);
+    }
+  };
   return (
     <form className="flex ">
       <input
@@ -27,7 +33,8 @@ const InputBox = ({ onCreate }: { onCreate: (content: string) => void }) => {
       />
       <button
         type="button"
-        onClick={handleClickButton}
+        onClick={handleClickCreateBtn}
+        onKeyDown={handleKeyDown}
         className="w-14 h-10 rounded-md bg-light-blue text-white"
       >
         추가
