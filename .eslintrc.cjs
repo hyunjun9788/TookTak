@@ -17,9 +17,11 @@ module.exports = {
     "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
     "react/react-in-jsx-scope": "off",
     "prefer-const": "warn",
+    "no-plusplus": "off",
     "@typescript-eslint/no-unused-vars": "warn",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-inferrable-types": "off",
+    "arrow-body-style": ["off"],
     'import/extensions': [
       'error',
       'ignorePackages',
@@ -30,6 +32,14 @@ module.exports = {
         'tsx': 'never'
       }
     ],
-
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": [
+          "arrow-function",
+          "function-declaration"
+        ]
+      }
+    ],
   },
 };
