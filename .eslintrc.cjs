@@ -21,6 +21,7 @@ module.exports = {
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-inferrable-types": "off",
     "react/require-default-props": "off",
+    "@typescript-eslint/no-explicit-any": 0,
     "arrow-body-style": ["off"],
     'import/extensions': [
       'error',
