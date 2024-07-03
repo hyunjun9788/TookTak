@@ -7,7 +7,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'prettier'
   ],
-  ignorePatterns: ["dist", ".eslintrc.cjs", 'tailwind.config.js', 'vite.config.ts', 'postcss.config.js'],
+  ignorePatterns: ["dist", ".eslintrc.cjs", 'tailwind.config.js', 'vite.config.ts', 'postcss.config.js', '**/*.d.ts'],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     project: './tsconfig.app.json'
@@ -18,9 +18,10 @@ module.exports = {
     "react/react-in-jsx-scope": "off",
     "prefer-const": "warn",
     "no-plusplus": "off",
-    "@typescript-eslint/no-unused-vars": "warn",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-inferrable-types": "off",
+    "react/require-default-props": "off",
+    "@typescript-eslint/no-explicit-any": 0,
     "arrow-body-style": ["off"],
     'import/extensions': [
       'error',
@@ -30,6 +31,13 @@ module.exports = {
         'jsx': 'never',
         'ts': 'never',
         'tsx': 'never'
+      }
+    ],
+    "react/jsx-props-no-spreading": "off",
+    "jsx-a11y/label-has-associated-control": [
+      2,
+      {
+        "labelAttributes": ["htmlFor"]
       }
     ],
     "react/function-component-definition": [

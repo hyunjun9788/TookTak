@@ -1,0 +1,93 @@
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { FormValue } from '../types/input';
+import Button, { ButtonKind } from './common/Button';
+import AuthInput from './common/AuthInput';
+
+const SignupForm = () => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setError,
+    formState: { errors, isValid, isSubmitting },
+  } = useForm<FormValue>({ mode: 'onChange' });
+  //   const { mutate, isPending } = useRegisterMutation(setError);
+
+  const onSubmit: SubmitHandler<FormValue> = (data) => {
+    // mutate(data);
+  };
+
+  const isButtonDisabled = !isValid || isSubmitting;
+  const password = watch('password');
+  return (
+    <form
+      autoComplete="off"
+      className="flex flex-col gap-6 mobile:gap-[30px]"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <AuthInput
+        label="이메일"
+        name="email"
+        registerOptions={register('email', {
+          required: '이메일을 입력해주세요',
+          pattern: {
+            value:
+              /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
+            message: '이메일 형식에 맞지 않습니다.',
+          },
+        })}
+        placeholder="이메일"
+        errors={errors}
+      />
+      <AuthInput
+        label="닉네임"
+        name="nickName"
+        registerOptions={register('nickName', {
+          required: '닉네임을 입력해주세요',
+          pattern: {
+            value: /^[가-힣a-zA-Z0-9]{2,16}$/,
+            message: '공백을 제외한 영어, 숫자, 한글 2자 ~ 12자',
+          },
+          //   validate: async (value) => await checkNickNameExists(value),
+        })}
+        placeholder="닉네임"
+        errors={errors}
+      />
+      <AuthInput
+        label="비밀번호"
+        name="password"
+        registerOptions={register('password', {
+          required: '비밀번호를 입력해주세요',
+          pattern: {
+            value: /^(?=.*[a-zA-Z])(?=.*[?!@#$%^*+=-])(?=.*[0-9]).{8,16}$/,
+            message: '숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요',
+          },
+        })}
+        type="password"
+        placeholder="숫자 + 영문자 + 특수문자 조합, 8자리 이상"
+        errors={errors}
+      />
+      <AuthInput
+        label="비밀번호 확인"
+        name="passwordConfirm"
+        registerOptions={register('passwordConfirm', {
+          required: '비밀번호 확인을 입력해주세요',
+          validate: (value) =>
+            watch().password !== value ? '비밀번호가 일치하지 않습니다' : true,
+        })}
+        type="password"
+        placeholder="숫자 + 영문자 + 특수문자 조합, 8자리 이상"
+        errors={errors}
+      />
+      <Button
+        type="submit"
+        kind={ButtonKind.primary}
+        disabled={isButtonDisabled}
+      >
+        회원가입하기
+      </Button>
+    </form>
+  );
+};
+
+export default SignupForm;
