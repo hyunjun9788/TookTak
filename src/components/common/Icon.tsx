@@ -1,6 +1,6 @@
 import { HTMLAttributes } from 'react';
-import VisibilityIcon from '../../public/visibility.svg?react';
-import VisibilityOffIcon from '../../public/visibility-off.svg?react';
+import VisibilityIcon from '../../../public/visibility.svg?react';
+import VisibilityOffIcon from '../../../public/visibility-off.svg?react';
 
 export type IconType = 'VisibilityIcon' | 'VisibilityOffIcon';
 
