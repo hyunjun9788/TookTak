@@ -19,6 +19,12 @@ const LoginForm = () => {
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
       <EmailInput register={register} errors={errors} />
       <PasswordInput register={register} errors={errors} />
+      <button
+        type="submit"
+        className="h-12 mt-4 text-white rounded-lg bg-main-blue"
+      >
+        로그인 하기
+      </button>
     </form>
   );
 };

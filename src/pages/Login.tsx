@@ -13,8 +13,19 @@ const Login = () => {
           </Link>
         </div>
       </div>
-      <div className="flex justify-center">
+      <div className="flex flex-col items-center justify-center">
         <LoginForm />
+        <div className="flex flex-col gap-3 mt-5">
+          <p>SNS 간편 로그인</p>
+          <div className="flex justify-center gap-2">
+            <a href="/">
+              <img src="/kakao.webp" alt="kakaoLogin" width={30} />
+            </a>
+            <a href="/">
+              <img src="/google.png" alt="googleLogin" width={30} />
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );
