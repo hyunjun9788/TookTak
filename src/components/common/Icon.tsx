@@ -1,8 +1,14 @@
 import { HTMLAttributes } from 'react';
 import VisibilityIcon from '../../../public/visibility.svg?react';
 import VisibilityOffIcon from '../../../public/visibility-off.svg?react';
+import AddIcon from '../../../public/add.svg?react';
+import CloseIcon from '../../../public/close.svg?react';
 
-export type IconType = 'VisibilityIcon' | 'VisibilityOffIcon';
+export type IconType =
+  | 'VisibilityIcon'
+  | 'VisibilityOffIcon'
+  | 'AddIcon'
+  | 'CloseIcon';
 
 export interface IconProps {
   name: IconType;
@@ -16,6 +22,8 @@ export const iconTypes: Record<
 > = {
   VisibilityIcon,
   VisibilityOffIcon,
+  AddIcon,
+  CloseIcon,
 };
 
 export const Icon = ({ name, className, onClick }: IconProps) => {
