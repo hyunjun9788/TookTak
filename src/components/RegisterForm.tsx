@@ -31,9 +31,7 @@ const RegisterForm = () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       const user = auth.currentUser;
-      console.log('1', user);
       if (user) {
-        console.log('2', nickName);
         await setDoc(doc(db, 'Users', user.uid), {
           email: user.email,
           nickName: nickName,
@@ -42,7 +40,7 @@ const RegisterForm = () => {
       toast.success('회원가입에 성공했습니다!');
       navigate('/todolist');
     } catch (error: any) {
-      console.log(error.message);
+      toast.error('회원가입에 실패했습니다!');
     }
   };
   const isButtonDisabled = !isValid || isSubmitting;
