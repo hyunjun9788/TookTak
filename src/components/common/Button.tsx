@@ -32,6 +32,7 @@ const ButtonStyleByKind = {
 };
 
 const Button = ({
+  type,
   children,
   kind,
   onClick,
@@ -39,7 +40,7 @@ const Button = ({
 }: PropsWithChildren<ButtonProps>) => {
   return (
     <button
-      type="button"
+      type={type}
       className={`${ButtonStyleByKind[kind].button}`}
       onClick={onClick}
     >

@@ -3,8 +3,8 @@ import { FormValue } from '../types/input';
 import Button, { ButtonKind } from './common/Button';
 import AuthInput from './common/AuthInput';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '@/firebase';
-
+import { auth, db } from '@/firebase';
+import { setDoc, doc } from 'firebase/firestore';
 const RegisterForm = () => {
   const {
     register,
@@ -16,6 +16,7 @@ const RegisterForm = () => {
 
   const email = watch('email');
   const password = watch('password');
+  const nickName = watch('nickName');
 
   //   const { mutate, isPending } = useRegisterMutation(setError);
 
@@ -24,12 +25,19 @@ const RegisterForm = () => {
   // };
 
   const handleRegister = async (e: any) => {
-    console.log('a');
     // e.preventDefault();
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       const user = auth.currentUser;
-      console.log(user);
+      console.log('1', user);
+      if (user) {
+        console.log('2', nickName);
+        await setDoc(doc(db, 'Users', user.uid), {
+          email: user.email,
+          nickName: nickName,
+        });
+      }
+      console.log('성공!');
     } catch (error: any) {
       console.log(error.message);
     }
@@ -39,7 +47,7 @@ const RegisterForm = () => {
     <form
       autoComplete="off"
       className="flex flex-col gap-6 mobile:gap-[30px]"
-      onSubmit={handleRegister}
+      onSubmit={handleSubmit(handleRegister)}
     >
       <AuthInput
         label="이메일"
