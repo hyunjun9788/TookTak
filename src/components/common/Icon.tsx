@@ -4,13 +4,15 @@ import VisibilityOffIcon from '../../../public/visibility-off.svg?react';
 import AddIcon from '../../../public/add.svg?react';
 import CloseIcon from '../../../public/close.svg?react';
 import DropDownIcon from '../../../public/drop-down.svg?react';
+import DropUpIcon from '../../../public/drop-up.svg?react';
 
 export type IconType =
   | 'VisibilityIcon'
   | 'VisibilityOffIcon'
   | 'AddIcon'
   | 'CloseIcon'
-  | 'DropDownIcon';
+  | 'DropDownIcon'
+  | 'DropUpIcon';
 
 export interface IconProps {
   name: IconType;
@@ -27,6 +29,7 @@ export const iconTypes: Record<
   AddIcon,
   CloseIcon,
   DropDownIcon,
+  DropUpIcon,
 };
 
 export const Icon = ({ name, className, onClick }: IconProps) => {

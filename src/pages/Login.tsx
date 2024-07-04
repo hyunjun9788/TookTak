@@ -8,7 +8,7 @@ const Login = () => {
         <img className="w-66 h-32" src="/logo.png" alt="logo" />
         <div className="flex justify-center gap-2 mt-5">
           <div>회원이 아니신가요?</div>
-          <Link to="/Signup" className="text-main-blue font-bold">
+          <Link to="/register" className="text-main-blue font-bold">
             회원가입 하기
           </Link>
         </div>

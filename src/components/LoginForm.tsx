@@ -23,7 +23,7 @@ const LoginForm = () => {
   const handleLogin: SubmitHandler<FormValue> = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      toast.success('로그인에 성공했습니다!', { position: 'top-center' });
+      toast.success('로그인에 성공했습니다!');
       navigate('/todolist');
     } catch (error: any) {
       toast.error('로그인에 실패했습니다!');
