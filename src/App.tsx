@@ -6,10 +6,14 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useSelector } from 'react-redux';
+import { RootState } from './redux/types';
 function App() {
-  const currentUser = false;
+  const user = useSelector((state: RootState) => state.user);
+
+  console.log('@', user);
   const RequireAuth = ({ children }: any) => {
-    return currentUser ? children : <Navigate to="/login" />;
+    return user ? children : <Navigate to="/login" />;
   };
   return (
     <>

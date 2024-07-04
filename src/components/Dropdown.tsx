@@ -1,12 +1,16 @@
 import { auth } from '@/firebase';
+import { logout } from '@/redux/user';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 
 const Dropdown = () => {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const handleLogout = async () => {
     try {
       await auth.signOut();
+      dispatch(logout());
+
       navigate('/login');
     } catch (error: any) {
       console.error(error.message);

@@ -3,14 +3,17 @@ import { Icon } from './common/Icon';
 import { auth, db } from '@/firebase';
 import { DocumentData, doc, getDoc } from 'firebase/firestore';
 import Dropdown from './Dropdown';
+import { useNavigate } from 'react-router';
 
 function Header() {
+  const navigate = useNavigate();
   const [view, setView] = useState(false);
-  const [userDetails, setUserDetails] = useState<DocumentData>();
+  const [userDetails, setUserDetails] = useState<DocumentData | null>(null);
   const fetchUserData = async () => {
     auth.onAuthStateChanged(async (user) => {
       if (!user) {
-        return null;
+        navigate('/login');
+        return;
       }
       const docRef = doc(db, 'Users', user.uid);
       const docSnap = await getDoc(docRef);
