@@ -2,8 +2,12 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { FormValue } from '../types/input';
 import Button, { ButtonKind } from './common/Button';
 import AuthInput from './common/AuthInput';
-
-const SignupForm = () => {
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth, db } from '@/firebase';
+import { setDoc, doc } from 'firebase/firestore';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
+const RegisterForm = () => {
   const {
     register,
     handleSubmit,
@@ -11,19 +15,40 @@ const SignupForm = () => {
     setError,
     formState: { errors, isValid, isSubmitting },
   } = useForm<FormValue>({ mode: 'onChange' });
+  const navigate = useNavigate();
+  const email = watch('email');
+  const password = watch('password');
+  const nickName = watch('nickName');
+
   //   const { mutate, isPending } = useRegisterMutation(setError);
 
-  const onSubmit: SubmitHandler<FormValue> = (data) => {
-    // mutate(data);
-  };
+  // const onSubmit: SubmitHandler<FormValue> = (data) => {
+  //   // mutate(data);
+  // };
 
+  const handleRegister = async (e: any) => {
+    // e.preventDefault();
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      const user = auth.currentUser;
+      if (user) {
+        await setDoc(doc(db, 'Users', user.uid), {
+          email: user.email,
+          nickName: nickName,
+        });
+      }
+      toast.success('회원가입에 성공했습니다!');
+      navigate('/todolist');
+    } catch (error: any) {
+      toast.error('회원가입에 실패했습니다!');
+    }
+  };
   const isButtonDisabled = !isValid || isSubmitting;
-  const password = watch('password');
   return (
     <form
       autoComplete="off"
       className="flex flex-col gap-6 mobile:gap-[30px]"
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(handleRegister)}
     >
       <AuthInput
         label="이메일"
@@ -90,4 +115,4 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+export default RegisterForm;

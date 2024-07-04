@@ -4,10 +4,10 @@ export enum ButtonKind {
   primary = 'primary',
   secondary = 'secondary',
   tertiary = 'tertiary',
+  floating = 'floating',
 }
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   kind: ButtonKind;
-  customSize?: string;
   onClick?: () => void;
 }
 
@@ -25,9 +25,14 @@ const ButtonStyleByKind = {
       'bg-transparent border border-solid border-gray-9F disabled:border-gray-35',
     p: 'text-gray-9F group-disabled:text-gray-6E',
   },
+  [ButtonKind.floating]: {
+    button:
+      'fixed right-[160px] bottom-[50px] flex items-center justify-center rounded-full bg-main-blue w-[60px] h-[60px]',
+  },
 };
 
 const Button = ({
+  type,
   children,
   kind,
   onClick,
@@ -35,7 +40,7 @@ const Button = ({
 }: PropsWithChildren<ButtonProps>) => {
   return (
     <button
-      type="button"
+      type={type}
       className={`${ButtonStyleByKind[kind].button}`}
       onClick={onClick}
     >

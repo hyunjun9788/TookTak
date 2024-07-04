@@ -2,21 +2,36 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { FormValue } from '../types/input';
 import AuthInput from './common/AuthInput';
 import Button, { ButtonKind } from './common/Button';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/firebase';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
 
 const LoginForm = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
     // getValues,
   } = useForm<FormValue>({ mode: 'onBlur' });
+  const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<FormValue> = (data) => {
-    // mutate(data);
+  const email = watch('email');
+  const password = watch('password');
+
+  const handleLogin: SubmitHandler<FormValue> = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      toast.success('로그인에 성공했습니다!');
+      navigate('/todolist');
+    } catch (error: any) {
+      toast.error('로그인에 실패했습니다!');
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+    <form onSubmit={handleSubmit(handleLogin)} className="flex flex-col gap-5">
       <AuthInput
         label="이메일"
         name="email"

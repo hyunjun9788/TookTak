@@ -18,6 +18,7 @@ module.exports = {
     "react/react-in-jsx-scope": "off",
     "prefer-const": "warn",
     "no-plusplus": "off",
+    "import/prefer-default-export": off,
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-inferrable-types": "off",
     "react/require-default-props": "off",

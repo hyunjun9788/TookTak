@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import SignupForm from '../components/SignupForm';
+import RegisterForm from '../components/RegisterForm';
 
-const Signup = () => {
+const Register = () => {
   return (
     <div className="flex flex-col justify-center gap-10">
       <div className="mt-32 mx-auto">
@@ -14,10 +14,10 @@ const Signup = () => {
         </div>
       </div>
       <div className="flex flex-col items-center justify-center">
-        <SignupForm />
+        <RegisterForm />
       </div>
     </div>
   );
 };
 
-export default Signup;
+export default Register;
