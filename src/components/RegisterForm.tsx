@@ -2,8 +2,10 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { FormValue } from '../types/input';
 import Button, { ButtonKind } from './common/Button';
 import AuthInput from './common/AuthInput';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/firebase';
 
-const SignupForm = () => {
+const RegisterForm = () => {
   const {
     register,
     handleSubmit,
@@ -11,19 +13,33 @@ const SignupForm = () => {
     setError,
     formState: { errors, isValid, isSubmitting },
   } = useForm<FormValue>({ mode: 'onChange' });
+
+  const email = watch('email');
+  const password = watch('password');
+
   //   const { mutate, isPending } = useRegisterMutation(setError);
 
-  const onSubmit: SubmitHandler<FormValue> = (data) => {
-    // mutate(data);
-  };
+  // const onSubmit: SubmitHandler<FormValue> = (data) => {
+  //   // mutate(data);
+  // };
 
+  const handleRegister = async (e: any) => {
+    console.log('a');
+    // e.preventDefault();
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      const user = auth.currentUser;
+      console.log(user);
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
   const isButtonDisabled = !isValid || isSubmitting;
-  const password = watch('password');
   return (
     <form
       autoComplete="off"
       className="flex flex-col gap-6 mobile:gap-[30px]"
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleRegister}
     >
       <AuthInput
         label="이메일"
@@ -90,4 +106,4 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+export default RegisterForm;

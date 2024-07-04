@@ -3,7 +3,7 @@ import './App.css';
 import Home from './pages/Home';
 import TodoList from './pages/TodoList';
 import Login from './pages/Login';
-import Signup from './pages/Signup';
+import Register from './pages/Register';
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/todolist" element={<TodoList />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
+      <Route path="/register" element={<Register />} />
     </Routes>
   );
 }
