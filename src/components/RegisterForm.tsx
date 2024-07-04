@@ -5,6 +5,8 @@ import AuthInput from './common/AuthInput';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '@/firebase';
 import { setDoc, doc } from 'firebase/firestore';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
 const RegisterForm = () => {
   const {
     register,
@@ -13,7 +15,7 @@ const RegisterForm = () => {
     setError,
     formState: { errors, isValid, isSubmitting },
   } = useForm<FormValue>({ mode: 'onChange' });
-
+  const navigate = useNavigate();
   const email = watch('email');
   const password = watch('password');
   const nickName = watch('nickName');
@@ -37,7 +39,8 @@ const RegisterForm = () => {
           nickName: nickName,
         });
       }
-      console.log('성공!');
+      toast.success('회원가입에 성공했습니다!');
+      navigate('/todolist');
     } catch (error: any) {
       console.log(error.message);
     }
