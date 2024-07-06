@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSelector } from 'react-redux';
 import { RootState } from './redux/types';
+import Kakao from './pages/Kakao';
 function App() {
   const user = useSelector((state: RootState) => state.user);
 
@@ -28,6 +29,7 @@ function App() {
           }
         />
         <Route path="/login" element={<Login />} />
+        <Route path="/callback/kakaotalk" element={<Kakao />} />
         <Route path="/register" element={<Register />} />
       </Routes>
       <ToastContainer
