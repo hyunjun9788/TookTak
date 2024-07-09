@@ -3,9 +3,12 @@ import { FormValue } from '../types/input';
 import AuthInput from './common/AuthInput';
 import Button, { ButtonKind } from './common/Button';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '@/firebase';
+import { auth, db } from '@/firebase';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router';
+import { useDispatch } from 'react-redux';
+import { login } from '@/redux/user';
+import { doc, setDoc } from 'firebase/firestore';
 
 const LoginForm = () => {
   const {
@@ -16,15 +19,24 @@ const LoginForm = () => {
     // getValues,
   } = useForm<FormValue>({ mode: 'onBlur' });
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const email = watch('email');
   const password = watch('password');
 
   const handleLogin: SubmitHandler<FormValue> = async () => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      toast.success('로그인에 성공했습니다!');
-      navigate('/todolist');
+      const result = await signInWithEmailAndPassword(auth, email, password);
+      const user = result.user;
+      const uid = user.uid;
+      if (result.user) {
+        await setDoc(doc(db, 'Users', uid), {
+          email: email,
+          nickName: 'user',
+        });
+        toast.success('로그인에 성공했습니다!');
+        dispatch(login({ uid: uid, email: email, displayName: 'user' }));
+        navigate('/todolist');
+      }
     } catch (error: any) {
       toast.error('로그인에 실패했습니다!');
     }

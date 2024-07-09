@@ -8,11 +8,12 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSelector } from 'react-redux';
 import { RootState } from './redux/types';
+import Kakao from './pages/Kakao';
+import { PropsWithChildren } from 'react';
 function App() {
   const user = useSelector((state: RootState) => state.user);
 
-  console.log('@', user);
-  const RequireAuth = ({ children }: any) => {
+  const RequireAuth = ({ children }: PropsWithChildren) => {
     return user ? children : <Navigate to="/login" />;
   };
   return (
@@ -28,6 +29,7 @@ function App() {
           }
         />
         <Route path="/login" element={<Login />} />
+        <Route path="/callback/kakaotalk" element={<Kakao />} />
         <Route path="/register" element={<Register />} />
       </Routes>
       <ToastContainer
