@@ -51,27 +51,27 @@ export interface UserAccount {
 //   return { result, error };
 // }
 
-export const kakaoLogin = ({ email, id, id_token }: UserAccount) => {
-  // const navigate = useNavigate();
-  const provider = new OAuthProvider('oidc.kakao');
-  const credential = provider.credential({
-    idToken: id_token,
-  });
+// export const kakaoLogin = ({ email, id, id_token }: UserAccount) => {
+//   // const navigate = useNavigate();
+//   const provider = new OAuthProvider('oidc.kakao');
+//   const credential = provider.credential({
+//     idToken: id_token,
+//   });
 
-  signInWithCredential(auth, credential)
-    .then((result) => {
-      const credential = OAuthProvider.credentialFromResult(result);
-      console.log(credential);
-      const acToken = credential?.accessToken;
-      const idToken = credential?.idToken;
-      toast.success('로그인에 성공했습니다!');
-      // navigate('/todolist');
-    })
-    .catch((error) => {
-      // Handle error.
-      console.log(error);
-    });
-};
+//   signInWithCredential(auth, credential)
+//     .then((result) => {
+//       const credential = OAuthProvider.credentialFromResult(result);
+//       console.log(credential);
+//       const acToken = credential?.accessToken;
+//       const idToken = credential?.idToken;
+//       toast.success('로그인에 성공했습니다!');
+//       // navigate('/todolist');
+//     })
+//     .catch((error) => {
+//       // Handle error.
+//       console.log(error);
+//     });
+// };
 
 const SocialLogin = () => {
   const dispatch = useDispatch();
