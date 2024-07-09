@@ -1,13 +1,16 @@
 import { UserAccount } from '@/components/SocialLogin';
-import { auth } from '@/firebase';
+import { auth, db } from '@/firebase';
+import { login } from '@/redux/user';
 import { OAuthProvider, signInWithCredential } from 'firebase/auth';
+import { doc, setDoc } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 
 function Kakao() {
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const getResponse = async (code: string) => {
     try {
       const KAKAO_REST_API_KEY = import.meta.env.VITE_APP_REST_API_KEY;
@@ -40,6 +43,7 @@ function Kakao() {
       const { id, kakao_account } = await kapiData.json();
       console.log(kakao_account);
       const { email } = kakao_account;
+
       if (!email) {
         throw new Error('Invalid user');
       }
@@ -50,33 +54,40 @@ function Kakao() {
     }
   };
 
-  const kakaoLogin = ({ email, id, id_token }: UserAccount) => {
+  const kakaoLogin = async ({ email, id, id_token }: UserAccount) => {
     const provider = new OAuthProvider('oidc.kakao');
     const credential = provider.credential({
       idToken: id_token,
     });
 
-    signInWithCredential(auth, credential)
-      .then((result) => {
-        const credential = OAuthProvider.credentialFromResult(result);
-        console.log(credential);
-        const acToken = credential?.accessToken;
-        const idToken = credential?.idToken;
-        toast.success('로그인에 성공했습니다!');
-        navigate('/todolist');
-      })
-      .catch((error) => {
-        // Handle error.
-        console.log(error);
-      });
+    try {
+      const result = await signInWithCredential(auth, credential);
+      const user = result.user;
+      const uid = user.uid;
+      console.log('user', user);
+      dispatch(
+        login({ uid: uid, email: email, displayName: user.displayName }),
+      );
+      if (user) {
+        await setDoc(doc(db, 'Users', uid), {
+          email: email,
+          nickName: user.displayName,
+        });
+      }
+      navigate('/todolist');
+      toast.success('로그인에 성공했습니다!');
+
+      return { result, error: null };
+    } catch (error) {
+      return { result: null, error };
+    }
   };
   useEffect(() => {
     const code = new URL(window.location.href).searchParams.get('code');
     if (!code) return;
     const login = async (code: string) => {
       const { email, id, id_token } = await getResponse(code);
-      const result = await kakaoLogin({ email, id, id_token });
-      console.log('result', result);
+      await kakaoLogin({ email, id, id_token });
     };
     login(code);
   }, []);
