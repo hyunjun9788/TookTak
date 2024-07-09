@@ -1,6 +1,14 @@
-import { auth, db } from '@/firebase';
+import app, { auth, db } from '@/firebase';
 import { login } from '@/redux/user';
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  GoogleAuthProvider,
+  OAuthProvider,
+  signInWithCredential,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+} from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
@@ -12,36 +20,85 @@ declare global {
   }
 }
 
-const SocialLogin = () => {
-  const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${import.meta.env.VITE_APP_REST_API_KEY}&redirect_uri=${import.meta.env.VITE_APP_REDIRECT_URI}&response_type=code`;
+// const auth = getAuth(app)
 
+export interface UserAccount {
+  email: string;
+  id: string;
+  id_token: string;
+}
+
+// export async function kakaoSignUp({ email, id, id_token }: UserAccount) {
+//   let result = null;
+//   let error = null;
+
+//   try {
+//     result = await createUserWithEmailAndPassword(auth, email, id.toString());
+//     console.log('result1', result);
+//     alert('회원가입 완료');
+//   } catch (error) {
+//     if (error instanceof Error) {
+//       console.log(error.message);
+//       if (error.message === 'Firebase: Error (auth/email-already-in-use).') {
+//         console.log('true');
+//         await kakaoLogin({ email, id, id_token });
+//       } else {
+//         alert(error);
+//       }
+//     }
+//   }
+
+//   return { result, error };
+// }
+
+export const kakaoLogin = ({ email, id, id_token }: UserAccount) => {
+  // const navigate = useNavigate();
+  const provider = new OAuthProvider('oidc.kakao');
+  const credential = provider.credential({
+    idToken: id_token,
+  });
+
+  signInWithCredential(auth, credential)
+    .then((result) => {
+      const credential = OAuthProvider.credentialFromResult(result);
+      console.log(credential);
+      const acToken = credential?.accessToken;
+      const idToken = credential?.idToken;
+      toast.success('로그인에 성공했습니다!');
+      // navigate('/todolist');
+    })
+    .catch((error) => {
+      // Handle error.
+      console.log(error);
+    });
+};
+
+const SocialLogin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleClickGoogleLogin = () => {
+  const handleClickGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider).then(async (result) => {
-      console.log('result', result);
-      const { uid, email, displayName } = result.user;
-      if (result.user) {
-        await setDoc(doc(db, 'Users', uid), {
-          email: email,
-          nickName: displayName,
-        });
-        toast.success('로그인에 성공했습니다!');
-        dispatch(login({ uid: uid, email: email, displayName: displayName }));
-        navigate('/todolist');
-      }
-    });
+    console.log(provider);
+    const result = await signInWithPopup(auth, provider);
+    console.log('result', result);
+    const { uid, email, displayName } = result.user;
+    if (result.user) {
+      await setDoc(doc(db, 'Users', uid), {
+        email: email,
+        nickName: displayName,
+      });
+      toast.success('로그인에 성공했습니다!');
+      dispatch(login({ uid: uid, email: email, displayName: displayName }));
+      navigate('/todolist');
+    }
   };
 
   if (!window.Kakao.isInitialized()) {
     window.Kakao.init(import.meta.env.VITE_APP_REST_API_KEY);
-    console.log(window.Kakao.isInitialized());
   }
 
   const onLoginWithKakao = () => {
-    const redirectUri = `${window.location.origin}/callback/kakaotalk`;
-    console.log(redirectUri);
+    const redirectUri = import.meta.env.VITE_APP_REDIRECT_URI;
     window.Kakao.Auth.authorize({
       redirectUri,
     });
@@ -55,7 +112,7 @@ const SocialLogin = () => {
           src="/kakao.webp"
           alt="kakaoLogin"
           width={30}
-          onClick={() => (window.location.href = kakaoURL)}
+          onClick={onLoginWithKakao}
         />
         <img
           src="/google.png"
