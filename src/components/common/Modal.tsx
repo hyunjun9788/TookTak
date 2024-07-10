@@ -6,6 +6,7 @@ import ImageInput from '../modal/ImageInput';
 import { useForm } from 'react-hook-form';
 import { FormValue } from '@/types/input';
 import Input from './Input';
+import Button, { ButtonKind } from './Button';
 
 const Modal = ({ onOpenModal, text }: any) => {
   const id = Date.now();
@@ -55,7 +56,7 @@ const Modal = ({ onOpenModal, text }: any) => {
           <Icon
             onClick={onOpenModal}
             name="CloseIcon"
-            className="absolute right-2 top-2 w-4 h-4 md:w-9 md:h-9 lg:w-10 lg:h-10 text-gray-600"
+            className="absolute right-2 top-2 w-3 h-4 md:w-6 md:h-6 lg:w-8 lg:h-8 text-gray-600"
           />
 
           <form className="flex flex-col gap-5">
@@ -66,29 +67,28 @@ const Modal = ({ onOpenModal, text }: any) => {
                 setImageUrl={setImageUrl}
                 setImageUpload={setImageUpload}
               />
-              {/* <label htmlFor="profileImg" className="">
-                <span className="px-4 py-2 border rounded-md bg-light-blue">
-                  이미지 선택
-                </span>
-              </label> */}
             </section>
-            <section className="flex flex-col gap-3">
-              <p className="text-lg">제목</p>
 
-              <Input
-                name="title"
-                inputSize="title"
-                registerOptions={register('title', {
-                  required: '제목을 입력해주세요',
+            <section className="flex flex-col gap-3">
+              <p className="text-lg">할 일</p>
+
+              <textarea
+                className="scrollbar-hide w-full h-40 p-3 text-sm lg:text-base font-normal placeholder-gray-6E resize-none focus:outline-none leading-5 lg:leading-[22px] border border-solid rounded-lg"
+                {...register('textarea', {
+                  required: '할 일을 입력해 주세요',
                   maxLength: {
-                    value: 20,
-                    message: '제목은 최대 20글자 이하이어야 합니다.',
+                    value: 300,
+                    message: '300자 이하로 입력해 주세요',
                   },
                 })}
-                placeholder="제목"
-                errors={errors}
+                // maxLength={300}
+                placeholder="할 일을 입력해 주세요"
               />
             </section>
+
+            <Button kind={ButtonKind.modal} type="submit">
+              할 일 추가
+            </Button>
           </form>
         </div>
       </div>

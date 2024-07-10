@@ -6,6 +6,7 @@ export interface FormValue {
   nickName: string;
   passwordConfirm: string;
   title: string;
+  textarea: string;
 }
 
 export interface InputProps {

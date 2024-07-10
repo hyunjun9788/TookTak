@@ -10,7 +10,7 @@ interface InputProp {
 
 const INPUT_SIZE = {
   auth: 'w-[360px] mobile:w-[295px] h-[55px] md:h-[60px] lg:h-[70px]',
-  title: 'w-[295px] md:w-[510px] lg:w-full h-[55px] md:h-[60px] lg:h-[70px]',
+  title: 'w-full h-[55px] md:h-[60px] lg:h-[70px]',
 };
 
 const Input = ({
