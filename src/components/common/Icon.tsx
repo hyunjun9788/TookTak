@@ -5,6 +5,7 @@ import AddIcon from '../../../public/add.svg?react';
 import CloseIcon from '../../../public/close.svg?react';
 import DropDownIcon from '../../../public/drop-down.svg?react';
 import DropUpIcon from '../../../public/drop-up.svg?react';
+import UploadIcon from '../../../public/photo.svg?react';
 
 export type IconType =
   | 'VisibilityIcon'
@@ -12,7 +13,8 @@ export type IconType =
   | 'AddIcon'
   | 'CloseIcon'
   | 'DropDownIcon'
-  | 'DropUpIcon';
+  | 'DropUpIcon'
+  | 'UploadIcon';
 
 export interface IconProps {
   name: IconType;
@@ -30,6 +32,7 @@ export const iconTypes: Record<
   CloseIcon,
   DropDownIcon,
   DropUpIcon,
+  UploadIcon,
 };
 
 export const Icon = ({ name, className, onClick }: IconProps) => {
