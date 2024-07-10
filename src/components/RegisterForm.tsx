@@ -1,12 +1,12 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FormValue } from '../types/input';
 import Button, { ButtonKind } from './common/Button';
-import AuthInput from './common/AuthInput';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '@/firebase';
 import { setDoc, doc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router';
+import Input from './common/Input';
 const RegisterForm = () => {
   const {
     register,
@@ -50,9 +50,10 @@ const RegisterForm = () => {
       className="flex flex-col gap-6 mobile:gap-[30px]"
       onSubmit={handleSubmit(handleRegister)}
     >
-      <AuthInput
+      <Input
         label="이메일"
         name="email"
+        inputSize="auth"
         registerOptions={register('email', {
           required: '이메일을 입력해주세요',
           pattern: {
@@ -64,9 +65,10 @@ const RegisterForm = () => {
         placeholder="이메일"
         errors={errors}
       />
-      <AuthInput
+      <Input
         label="닉네임"
         name="nickName"
+        inputSize="auth"
         registerOptions={register('nickName', {
           required: '닉네임을 입력해주세요',
           pattern: {
@@ -78,9 +80,10 @@ const RegisterForm = () => {
         placeholder="닉네임"
         errors={errors}
       />
-      <AuthInput
+      <Input
         label="비밀번호"
         name="password"
+        inputSize="auth"
         registerOptions={register('password', {
           required: '비밀번호를 입력해주세요',
           pattern: {
@@ -92,9 +95,10 @@ const RegisterForm = () => {
         placeholder="숫자 + 영문자 + 특수문자 조합, 8자리 이상"
         errors={errors}
       />
-      <AuthInput
+      <Input
         label="비밀번호 확인"
         name="passwordConfirm"
+        inputSize="auth"
         registerOptions={register('passwordConfirm', {
           required: '비밀번호 확인을 입력해주세요',
           validate: (value) =>
