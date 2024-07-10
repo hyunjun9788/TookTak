@@ -3,7 +3,7 @@ import { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 export enum ButtonKind {
   primary = 'primary',
   secondary = 'secondary',
-  tertiary = 'tertiary',
+  modal = 'modal',
   floating = 'floating',
 }
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -20,10 +20,9 @@ const ButtonStyleByKind = {
     button:
       'w-14 h-10 rounded-md bg-light-blue text-white disabled:text-gray-6E',
   },
-  [ButtonKind.tertiary]: {
+  [ButtonKind.modal]: {
     button:
-      'bg-transparent border border-solid border-gray-9F disabled:border-gray-35',
-    p: 'text-gray-9F group-disabled:text-gray-6E',
+      'h-12 mt-8 bg-main-blue border border-solid border-gray-9F disabled:border-gray-35 rounded-lg text-white hover:bg-light-blue',
   },
   [ButtonKind.floating]: {
     button:

@@ -1,6 +1,5 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FormValue } from '../types/input';
-import AuthInput from './common/AuthInput';
 import Button, { ButtonKind } from './common/Button';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '@/firebase';
@@ -9,6 +8,7 @@ import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { login } from '@/redux/user';
 import { doc, setDoc } from 'firebase/firestore';
+import Input from './common/Input';
 
 const LoginForm = () => {
   const {
@@ -44,9 +44,10 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit(handleLogin)} className="flex flex-col gap-5">
-      <AuthInput
+      <Input
         label="이메일"
         name="email"
+        inputSize="auth"
         registerOptions={register('email', {
           required: '이메일을 입력해주세요',
           pattern: {
@@ -58,9 +59,10 @@ const LoginForm = () => {
         placeholder="이메일"
         errors={errors}
       />
-      <AuthInput
+      <Input
         label="비밀번호"
         name="password"
+        inputSize="auth"
         registerOptions={register('password', {
           required: '비밀번호를 입력해주세요',
           pattern: {

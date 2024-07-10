@@ -5,9 +5,11 @@ export interface FormValue {
   password: string;
   nickName: string;
   passwordConfirm: string;
+  title: string;
+  textarea: string;
 }
 
-export interface AuthInputProps {
+export interface InputProps {
   register: UseFormRegister<FormValue>;
   errors: FieldErrors<FormValue>;
 }
